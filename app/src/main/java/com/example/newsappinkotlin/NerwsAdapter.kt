@@ -6,12 +6,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class NerwsAdapter(private val items:ArrayList<String>): RecyclerView.Adapter<NewsHolder>() {
+class NerwsAdapter(private val items:ArrayList<String>, private val listner:NewsItemClicked): RecyclerView.Adapter<NewsHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_news,parent,false)
-        return NewsHolder(view)
+       val viewholder =NewsHolder(view)
+        view.setOnClickListener {
+            listner.onItemClicked(items[viewholder.adapterPosition])
+        }
+
+        return viewholder
 
     }
 
@@ -30,4 +35,7 @@ class NerwsAdapter(private val items:ArrayList<String>): RecyclerView.Adapter<Ne
 class NewsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val title:TextView = itemView.findViewById(R.id.title)
 
+}
+interface  NewsItemClicked{
+    fun onItemClicked(item:String)
 }

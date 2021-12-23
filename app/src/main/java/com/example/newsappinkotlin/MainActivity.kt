@@ -3,10 +3,11 @@ package com.example.newsappinkotlin
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NewsItemClicked {
     lateinit var  recyclerviewView: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         recyclerviewView = findViewById(R.id.rv_news)
         recyclerviewView.layoutManager = LinearLayoutManager(this)
         val items = fetchdata()
-        val adapter = NerwsAdapter(items)
+        val adapter = NerwsAdapter(items,this)
         recyclerviewView.adapter =adapter
     }
     private fun fetchdata():ArrayList<String>{
@@ -23,5 +24,9 @@ class MainActivity : AppCompatActivity() {
             list.add("Item $i")
         }
         return  list
+    }
+
+    override fun onItemClicked(item: String) {
+        Toast.makeText(this,"hello $item",Toast.LENGTH_LONG).show()
     }
 }
